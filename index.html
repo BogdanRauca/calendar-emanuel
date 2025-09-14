@@ -162,29 +162,6 @@
         line-height: 1.5;
       }
 
-      .play-button {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        width: 60px;
-        height: 60px;
-        background: rgba(0, 0, 0, 0.7);
-        border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        color: white;
-        font-size: 24px;
-        cursor: pointer;
-        transition: all 0.3s ease;
-      }
-
-      .play-button:hover {
-        background: rgba(0, 0, 0, 0.9);
-        transform: translate(-50%, -50%) scale(1.1);
-      }
-
       .instructions {
         background: rgba(255, 255, 255, 0.9);
         border: 2px dashed #ddd;
@@ -309,7 +286,9 @@
           <div class="video-card">
             <div class="video-container">
               <!-- Replace with your Google Drive video embed link -->
-              <iframe src="https://drive.google.com/file/d/1xqdPVjl7pwLRwzwyDeWSPdo8ICBve_8F/preview"></iframe>
+              <iframe
+                src="https://drive.google.com/file/d/1xqdPVjl7pwLRwzwyDeWSPdo8ICBve_8F/preview"
+              ></iframe>
             </div>
             <div class="video-info">
               <h3 class="video-title">Tutorial 1: Adăugare calendar iPhone</h3>
@@ -324,9 +303,10 @@
           <!-- Video 2 -->
           <div class="video-card">
             <div class="video-container">
-              <iframe src="https://drive.google.com/file/d/1PpmrPugC4WSwUz0cLXqzdscP1DJ853ru/preview"></iframe>
-              <div style="text-align: center; color: #999">
-              </div>
+              <iframe
+                src="https://drive.google.com/file/d/1PpmrPugC4WSwUz0cLXqzdscP1DJ853ru/preview"
+              ></iframe>
+              <div style="text-align: center; color: #999"></div>
             </div>
             <div class="video-info">
               <h3 class="video-title">
@@ -348,39 +328,6 @@
     <script>
       // Optional: Add smooth scrolling for mobile
       document.documentElement.style.scrollBehavior = "smooth";
-
-      // Optional: Add click handlers for video cards (if needed)
-      document.querySelectorAll(".video-card").forEach((card) => {
-        card.addEventListener("click", function (e) {
-          // You can add custom click behavior here if needed
-          console.log("Video card clicked");
-        });
-      });
-
-      // Optional: Lazy loading for videos (performance optimization)
-      function lazyLoadVideos() {
-        const videoContainers = document.querySelectorAll(
-          ".video-container iframe"
-        );
-
-        const observer = new IntersectionObserver((entries) => {
-          entries.forEach((entry) => {
-            if (entry.isIntersecting) {
-              const iframe = entry.target;
-              if (!iframe.src && iframe.dataset.src) {
-                iframe.src = iframe.dataset.src;
-              }
-            }
-          });
-        });
-
-        videoContainers.forEach((iframe) => {
-          observer.observe(iframe);
-        });
-      }
-
-      // Initialize lazy loading
-      lazyLoadVideos();
     </script>
   </body>
 </html>
