@@ -1,26 +1,396 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Hello Page</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      display: flex;
-      height: 100vh;
-      margin: 0;
-      justify-content: center;
-      align-items: center;
-      background-color: #f0f0f0;
-    }
-    h1 {
-      color: #333;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Video Tutorials</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 40px 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        .logo {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            margin: 0 auto 20px;
+            background: #f0f0f0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            color: #666;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .logo:hover {
+            transform: translateY(-5px);
+        }
+
+        .logo img {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            color: #2c3e50;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        .subtitle {
+            font-size: 1.2rem;
+            color: #7f8c8d;
+            font-weight: 300;
+        }
+
+        .description {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 40px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+        }
+
+        .description h2 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+            font-size: 1.8rem;
+        }
+
+        .description p {
+            color: #555;
+            font-size: 1.1rem;
+            line-height: 1.7;
+        }
+
+        .tutorials-section {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+        }
+
+        .tutorials-section h2 {
+            color: #2c3e50;
+            margin-bottom: 30px;
+            font-size: 1.8rem;
+            text-align: center;
+        }
+
+        .video-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            margin-top: 20px;
+        }
+
+        .video-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .video-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .video-container {
+            position: relative;
+            width: 100%;
+            height: 200px;
+            background: #f8f9fa;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #666;
+        }
+
+        .video-container iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        .video-info {
+            padding: 20px;
+        }
+
+        .video-title {
+            font-size: 1.2rem;
+            color: #2c3e50;
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+
+        .video-description {
+            color: #7f8c8d;
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+
+        .play-button {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 56px;
+            height: 56px;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #4b5563;
+            font-size: 20px;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.8);
+        }
+
+        .play-button:hover {
+            background: rgba(255, 255, 255, 1);
+            transform: translate(-50%, -50%) scale(1.1);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+            color: #374151;
+        }
+
+        .instructions {
+            background: rgba(255, 255, 255, 0.9);
+            border: 2px dashed #ddd;
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .instructions h3 {
+            color: #e74c3c;
+            margin-bottom: 15px;
+            font-size: 1.3rem;
+        }
+
+        .instructions p {
+            color: #666;
+            margin-bottom: 10px;
+        }
+
+        .instructions code {
+            background: #f8f9fa;
+            padding: 2px 6px;
+            border-radius: 4px;
+            color: #e74c3c;
+            font-family: 'Courier New', monospace;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 15px;
+            }
+
+            h1 {
+                font-size: 2rem;
+            }
+
+            .logo {
+                width: 100px;
+                height: 100px;
+            }
+
+            .video-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+
+            .header, .description, .tutorials-section {
+                padding: 20px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            h1 {
+                font-size: 1.7rem;
+            }
+
+            .subtitle {
+                font-size: 1rem;
+            }
+
+            .video-grid {
+                grid-template-columns: 1fr;
+                min-width: 280px;
+            }
+        }
+    </style>
 </head>
 <body>
-  <h1>Hello, World!</h1>
+    <div class="container">
+        <!-- Header Section -->
+        <header class="header">
+            <div class="logo">
+                <!-- Replace this with your logo -->
+                <img src="your-logo.png" alt="Logo" style="display: none;">
+                <!-- Placeholder text - remove when adding logo -->
+                <span>LOGO</span>
+            </div>
+            <h1>Video Tutorials</h1>
+            <p class="subtitle">Learn at your own pace</p>
+        </header>
+
+        <!-- Description Section -->
+        <section class="description">
+            <h2>About This Course</h2>
+            <p>
+                Welcome to our comprehensive video tutorial series! Here you'll find step-by-step guides
+                that will help you master the skills you need. Each video is carefully crafted to provide
+                clear explanations and practical examples that you can follow along with.
+            </p>
+        </section>
+
+        <!-- Instructions for customization -->
+        <div class="instructions">
+            <h3>🔧 Customization Instructions</h3>
+            <p><strong>Logo:</strong> Replace <code>your-logo.png</code> with your actual logo file path</p>
+            <p><strong>Videos:</strong> Replace the Google Drive links in the iframe src attributes</p>
+            <p><strong>Content:</strong> Update titles, descriptions, and main text as needed</p>
+        </div>
+
+        <!-- Tutorials Section -->
+        <section class="tutorials-section">
+            <h2>📹 Video Tutorials</h2>
+            
+            <div class="video-grid">
+                <!-- Video 1 -->
+                <div class="video-card">
+                    <div class="video-container">
+                        <!-- Replace with your Google Drive video embed link -->
+                        <iframe src="" title="Tutorial 1"></iframe>
+                        <!-- Placeholder content - remove when adding video -->
+                        <div style="text-align: center; color: #999;">
+                            <div class="play-button">▶</div>
+                            <p>Video Placeholder 1</p>
+                        </div>
+                    </div>
+                    <div class="video-info">
+                        <h3 class="video-title">Tutorial 1: Getting Started</h3>
+                        <p class="video-description">
+                            An introduction to the basics. This tutorial covers the fundamental concepts
+                            you need to know before diving deeper into the subject.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Video 2 -->
+                <div class="video-card">
+                    <div class="video-container">
+                        <iframe src="" title="Tutorial 2"></iframe>
+                        <div style="text-align: center; color: #999;">
+                            <div class="play-button">▶</div>
+                            <p>Video Placeholder 2</p>
+                        </div>
+                    </div>
+                    <div class="video-info">
+                        <h3 class="video-title">Tutorial 2: Intermediate Techniques</h3>
+                        <p class="video-description">
+                            Build upon the basics with more advanced techniques. Learn practical
+                            applications and best practices in this comprehensive guide.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Video 3 -->
+                <div class="video-card">
+                    <div class="video-container">
+                        <iframe src="" title="Tutorial 3"></iframe>
+                        <div style="text-align: center; color: #999;">
+                            <div class="play-button">▶</div>
+                            <p>Video Placeholder 3</p>
+                        </div>
+                    </div>
+                    <div class="video-info">
+                        <h3 class="video-title">Tutorial 3: Advanced Concepts</h3>
+                        <p class="video-description">
+                            Master the advanced concepts and techniques. This tutorial will help you
+                            become proficient and confident in applying what you've learned.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Add more video cards as needed -->
+            </div>
+        </section>
+    </div>
+
+    <script>
+        // Optional: Add smooth scrolling for mobile
+        document.documentElement.style.scrollBehavior = 'smooth';
+
+        // Optional: Add click handlers for video cards (if needed)
+        document.querySelectorAll('.video-card').forEach(card => {
+            card.addEventListener('click', function(e) {
+                // You can add custom click behavior here if needed
+                console.log('Video card clicked');
+            });
+        });
+
+        // Optional: Lazy loading for videos (performance optimization)
+        function lazyLoadVideos() {
+            const videoContainers = document.querySelectorAll('.video-container iframe');
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const iframe = entry.target;
+                        if (!iframe.src && iframe.dataset.src) {
+                            iframe.src = iframe.dataset.src;
+                        }
+                    }
+                });
+            });
+
+            videoContainers.forEach(iframe => {
+                observer.observe(iframe);
+            });
+        }
+
+        // Initialize lazy loading
+        // lazyLoadVideos();
+    </script>
 </body>
 </html>
-
